@@ -1,5 +1,5 @@
 #!/bin/bash
-wget --quiet $1 -O - | grep --before-context 0 --after-context 1 -P "<td style=\"background-image: url\\(https://www.newgrounds.com/(audio/icon/|img/defaults/)" | grep --only-matching -P "http://www.newgrounds.com/audio/listen/\d*" | \
+wget --quiet $1 -O - | grep --before-context 0 --after-context 1 -P "<td style=\"background-image: url\\((https?://www.newgrounds.com/(audio/icon/|img/defaults/)|https?://.*ngfiles\.com/.*\.png)" | grep --only-matching -P "http://www.newgrounds.com/audio/listen/\d*" | \
 while read songpage; do
 	wget -nv --show-progress $(wget --quiet $songpage -O - | grep --only-matching "\"params\":{\"filename\":\"[^\"]*" | sed "s/\\\//gi" | sed "s/.*\(http:\\/\\/audio.ngfiles.com[^\"]*\).*/\1/")
 	done
